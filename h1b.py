@@ -5,6 +5,7 @@ from sklearn import linear_model
 from sklearn.model_selection import train_test_split
 from sklearn import tree
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.ensemble import RandomForestClassifier
 
 fname='h1b_sample.csv'
 data=read_csv(fname)
@@ -65,32 +66,14 @@ model.score(X_test,Y_test) #0.77, 0.8
 
 model=tree.DecisionTreeClassifier(min_samples_leaf=50) #0.84
 X_soc= ds[:,3]
-for i in range(ds.size):
-  if X_soc[i]=='ADVERTISING AND PROMOTIONS MANAGERS':
-   X_soc[i]=1
-  elif X_soc[i]=='BIOCHEMISTS AND BIOPHYSICISTS':
-   X_soc[i]=2
-  elif X_soc[i]=='CHIEF EXECUTIVES':
-   X_soc[i]=3
-  elif X_soc[i]=='FINANCIAL MANAGERS':
-   X_soc[i]=4
-  elif X_soc[i]=='GENERAL AND OPERATIONS MANAGER':
-   X_soc[i]=5
-  elif X_soc[i]=='GENERAL AND OPERATIONS MANAGERS':
-   X_soc[i]=5
-  elif X_soc[i]=='GENERAL AND OPERATIONS MANAGERSE':
-   X_soc[i]=5
-  elif X_soc[i]=='MARKETING MANAGERS':
-   X_soc[i]=6
-  elif X_soc[i]=='PUBLIC RELATIONS SPECIALISTS':
-   X_soc[i]=7
 
+corp=np.unique(ds[:,3])
 corpus=['ADVERTISING AND PROMOTIONS MANAGERS','BIOCHEMISTS AND BIOPHYSICISTS','CHIEF EXECUTIVES','FINANCIAL MANAGERS','GENERAL AND OPERATIONS MANAGER','MARKETING MANAGERS','PUBLIC RELATIONS SPECIALISTS']
 vectorizer = CountVectorizer()
-vectorizer.fit_transform(corpus)
+vectorizer.fit_transform(corp)
 ds=data.values
 
-for i in range(2999):
+for i in range(Y_data.size):
   if ds[i,3]=='GENERAL AND OPERATIONS MANAGERS':
    ds[i,3]='GENERAL AND OPERATIONS MANAGER'
   if ds[i,3]=='GENERAL AND OPERATIONS MANAGERSE':
@@ -100,3 +83,24 @@ X_soc=vectorizer.transform(ds[:,3]).toarray()
 X_trans1=np.c_[X_soc, X_trans]
 X_train, X_test, Y_train, Y_test = train_test_split(X_trans1, Y_data, test_size=0.25,random_state=0) #0.84
 
+count=0
+for i in range(Y_test.size):
+  if model.predict(X_test)[i]=='CERTIFIED':
+   count=count+1
+   
+for i in range(Y_test.size):
+  if model.predict(X_test)[i]==Y_test[i] and Y_test[i]!='CERTIFIED':
+   count=count+1
+   
+c=np.array([])
+for i in range(ws.size):
+  a,b=ws[i].split(",")
+  c=np.append(c,b)
+
+workstate=np.unique(c)
+vec = CountVectorizer()
+vec.fit_transform(workstate)
+X_ws=vec.trasform(c).toarray()
+X_new2=np.c_[X_new, X_ws]
+X_train, X_test, Y_train, Y_test = train_test_split(X_new2, Y_data, test_size=0.25,random_state=0)
+model=tree.DecisionTreeClassifier(min_samples_leaf=10) #0.82

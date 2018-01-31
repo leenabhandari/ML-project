@@ -335,3 +335,93 @@ LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
           verbose=0, warm_start=False)
 >>> model.score(X_test,Y_test)
 0.8422222222222222
+
+
+
+>>> data=read_csv('h1b_kaggle1.csv')
+>>> ds=data.values
+>>> full_time=ds[:,5]
+>>>
+>>> for i in range(full_time.size):
+...  if full_time[i]=='Y':
+...   full_time[i]=1
+...  else:
+...   full_time[i]=0
+...
+...
+>>> X_data1=ds[:,6]
+>>> X_data2=np.c_[X_data1, full_time]
+>>> Y_data=ds[:,1]
+>>> X_train, X_test, Y_train, Y_test = train_test_split(X_data2, Y_data, test_size=0.10,random_state=7)
+>>> model=tree.DecisionTreeClassifier()
+>>> imp=Imputer()
+>>> X_trans=imp.fit_transform(X_data2)
+>>> X_train, X_test, Y_train, Y_test = train_test_split(X_trans, Y_data, test_size=0.10,random_state=7)
+>>> model.fit(X_train,Y_train)
+DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+            splitter='best')
+>>> model.score(X_test,Y_test)
+0.87046245566121
+>>> model= RandomForestClassifier()
+>>> model.fit(X_train,Y_train)
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+>>> model.score(X_test,Y_test)
+0.8696198104881013
+
+>>> model=tree.DecisionTreeClassifier(min_samples_leaf=50)
+>>> X_train, X_test, Y_train, Y_test = train_test_split(X_trans, Y_data, test_size=0.10,random_state=0)
+>>> model.fit(X_train,Y_train)
+DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=50, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+            splitter='best')
+>>> model.score(X_test,Y_test)
+0.8722676480873953
+>>> X_train, X_test, Y_train, Y_test = train_test_split(X_trans, Y_data, test_size=0.10,random_state=7)
+>>> lon=ds[:,9]
+>>> lat=ds[:,10]
+>>> X_l=np.c_[lon,lat]
+>>> X_trans1=imp.fit_transform(X_l)
+>>> X_train, X_test, Y_train, Y_test = train_test_split(X_trans1, Y_data, test_size=0.10,random_state=7)
+>>> model.fit(X_train,Y_train)
+DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=50, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+            splitter='best')
+>>> model.score(X_test,Y_test)
+0.8714982764076005
+>>> X_new=np.c_[X_trans,X_trans1]
+>>> X_train, X_test, Y_train, Y_test = train_test_split(X_new, Y_data, test_size=0.10,random_state=7)
+>>> model.fit(X_train,Y_train)
+DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=50, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+            splitter='best')
+>>> model.score(X_test,Y_test)
+0.8728505054205732
+>>> X_train, X_test, Y_train, Y_test = train_test_split(X_new, Y_data, test_size=0.25,random_state=7)
+>>> model.fit(X_train,Y_train)
+DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=50, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+            splitter='best')
+>>> model.score(X_test,Y_test)
+0.8720683921919713

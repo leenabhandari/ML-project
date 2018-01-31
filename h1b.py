@@ -8,12 +8,14 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.preprocessing import Imputer
+from sklearn.feature_extraction import FeatureHasher
+from sklearn.feature_extraction.text import HashingVectorizer
 import string
 
 
 fname='h1b_sample3.csv'
 data=read_csv(fname)
-
+data=read_csv('h1b_kaggle1.csv')
 
 ################
 data1=np.array(data)
@@ -75,7 +77,8 @@ X_train, X_test, Y_train, Y_test = train_test_split(X_trans, Y_data, test_size=0
 model.fit(X_train,Y_train)
 model.score(X_test,Y_test) #0.77, 0.8
 
-model=tree.DecisionTreeClassifier(min_samples_leaf=50) #0.84
+model=tree.DecisionTreeClassifier(min_samples_leaf=50)
+model=tree.DecisionTreeClassifier() #0.84
 X_soc= ds[:,3]
 
 corp=np.unique(ds[:,3])
@@ -83,11 +86,6 @@ corpus=['ADVERTISING AND PROMOTIONS MANAGERS','BIOCHEMISTS AND BIOPHYSICISTS','C
 
 ds=data.values
 
-for i in range(Y_data.size):
-  if ds[i,3]=='GENERAL AND OPERATIONS MANAGERS':
-   ds[i,3]='GENERAL AND OPERATIONS MANAGER'
-  if ds[i,3]=='GENERAL AND OPERATIONS MANAGERSE':
-   ds[i,3]='GENERAL AND OPERATIONS MANAGER'
 
 
 soc=ds[:,3]   
@@ -98,6 +96,7 @@ for i in range(soc.size):
   soc[i]=string.replace(soc[i],'INFORMATON','INFORMATION')
   soc[i]=string.replace(soc[i],'MANGERS','MANAGER')
   soc[i]=string.replace(soc[i],'MANAGERE','MANAGER')
+
 
 sfit=np.unique(soc)
 
@@ -118,16 +117,20 @@ for i in range(Y_test.size):
    count=count+1
 ##########
 ws=ds[:,8] 
-c=np.array([])
+c1=np.array([])
 for i in range(ws.size):
   a,b=ws[i].split(",")
-  c=np.append(c,b)
+  c1=np.append(c1,b)
 
-workstate=np.unique(c)
+workstate=np.unique(d)
 vec = CountVectorizer()
 vec.fit_transform(workstate)
-X_ws=vec.transform(c).toarray()
+X_ws=vec.transform(d).toarray()
 X_new2=np.c_[X_new, X_ws]
 X_train, X_test, Y_train, Y_test = train_test_split(X_new2, Y_data, test_size=0.10,random_state=7)
 model=tree.DecisionTreeClassifier(min_samples_leaf=10) #0.82
 
+ws=ws.astype(str)
+c=np.char.split(ws,',')
+d=[i[1] for i in c]
+workstate=set(d)

@@ -10,6 +10,10 @@ from sklearn.svm import SVC
 from sklearn.preprocessing import Imputer
 from sklearn.feature_extraction import FeatureHasher
 from sklearn.feature_extraction.text import HashingVectorizer
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_predict
+from sklearn import metrics
 import string
 
 
@@ -134,3 +138,14 @@ ws=ws.astype(str)
 c=np.char.split(ws,',')
 d=[i[1] for i in c]
 workstate=set(d)
+hv = HashingVectorizer(n_features=10)
+X_ws=hv.transform(d).toarray()
+X_new=np.c_[X_data1,X_ws]
+imp=Imputer()
+X_trans=imp.fit_transform(X_new)
+##########
+kfold = KFold(n_splits=10, random_state=7)
+results = cross_val_score(model, X, Y_data, cv=kfold)
+predicted=cross_val_predict(model,X_trans,Y_data,cv=kfold)
+metrics.accuracy_score(Y_data, predicted)
+results.mean()

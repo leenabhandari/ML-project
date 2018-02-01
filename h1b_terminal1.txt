@@ -133,5 +133,212 @@ array(['CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
 >>> metrics.accuracy_score(Y_data, predicted)
 0.8292131685267411
 
+>>> model=RandomForestClassifier(max_features='sqrt')
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8351934077363095
+>>> model=RandomForestClassifier(max_features=0.2)
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8354934197367895
+>>> predicted[0:50]
+array(['CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'DENIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED'], dtype=object)
+	   
+>>> model=tree.DecisionTreeClassifier()
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8012720508820352
+>>> predicted[0:50]
+array(['CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN'], dtype=object)
+	   
+>>> model=RandomForestClassifier(max_features=0.2)
+>>> model
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features=0.2, max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False)
+>>> model=RandomForestClassifier(max_features=0.2,n_estimators=20)
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8388735549421977
+>>> model=RandomForestClassifier(max_features=0.2,random_state=7)
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8361934477379095
+>>> model=RandomForestClassifier(n_estimators=100,oob_score=True,n_jobs=-1,random_state=50,max_features="auto",min_samples_leaf=50)
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.875535021400856
+>>> predicted[0:50]
+array(['CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED'],
+      dtype=object)
+>>> model=RandomForestClassifier(n_estimators=100,oob_score=True,n_jobs=-1,random_state=50,max_features="auto")
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8363334533381335
+>>> predicted[0:50]
+array(['CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED'], dtype=object)
+>>> model=RandomForestClassifier(oob_score=True,n_jobs=-1,random_state=50,max_features="auto",min_samples_leaf=50)
+>>> model=RandomForestClassifier(oob_score=True,n_jobs=-1,random_state=50,max_features="auto")
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+C:\Users\leena_bhandari\AppData\Roaming\Python\Python27\site-packages\sklearn\ensemble\forest.py:453: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable oob estimates.
+  warn("Some inputs do not have OOB scores. "
+C:\Users\leena_bhandari\AppData\Roaming\Python\Python27\site-packages\sklearn\ensemble\forest.py:458: RuntimeWarning: invalid value encountered in true_divide
+  predictions[k].sum(axis=1)[:, np.newaxis])
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8354534181367255
+>>> model=RandomForestClassifier(n_jobs=-1,random_state=50,max_features="auto")
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8354534181367255
+>>> predicted[0:25]
+array(['CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN'], dtype=object)
+>>> Y_data[0:25]
+array(['CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN', 'WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN', 'WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED-WITHDRAWN'], dtype=object)
+	   
+>>> model=RandomForestClassifier(n_jobs=-1,random_state=50,n_estimators=1)
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.7936517460698428
+>>> predicted[0:25]
+array(['CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'DENIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED-WITHDRAWN'], dtype=object)
+>>> Y_data[0:25]
+array(['CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN', 'WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN', 'WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED-WITHDRAWN'], dtype=object)
+	   
+>>> import matplotlib.pyplot as plt
+>>> plt.boxplot(results)
+{'boxes': [<matplotlib.lines.Line2D object at 0x0C1E3430>], 'fliers': [<matplotlib.lines.Line2D object at 0x0C1E3EF0>], 'medians': [<matplotlib.lines.Line2D object at 0x0C1E3CF0>], 'means': [], 'whiskers': [<matplotlib.lines.Line2D object at 0x0C1E33F0>, <matplotlib.lines.Line2D object at 0x0C1E3710>], 'caps': [<matplotlib.lines.Line2D object at 0x0C1E38F0>, <matplotlib.lines.Line2D object at 0x0C1E3AF0>]}
+>>> plt.show
+<function show at 0x0C190F70>
+>>> plt.show()
+>>> plt.hist(results)
+(array([2., 1., 1., 3., 0., 1., 0., 0., 0., 2.]), array([0.7074 , 0.72858, 0.74976, 0.77094, 0.79212, 0.8133 , 0.83448,
+       0.85566, 0.87684, 0.89802, 0.9192 ]), <a list of 10 Patch objects>)
+>>> plt.show()
+
+>>> X_train, X_test, Y_train, Y_test = train_test_split(X_data4, Y_data, test_size=0.10,random_state=7)
+>>> model.fit(X_train,Y_train)
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=1, n_jobs=-1,
+            oob_score=False, random_state=50, verbose=0, warm_start=False)
+>>> model.score(X_test,Y_test)
+0.8294
+>>> model.predict(X_test)[0:25]
+array(['CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED'], dtype=object)
+>>> Y_test[0:25]
+array(['WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED'],
+      dtype=object)
+>>> model=RandomForestClassifier(n_jobs=-1,random_state=50,n_estimators=10)
+>>> model.fit(X_train,Y_train)
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=-1,
+            oob_score=False, random_state=50, verbose=0, warm_start=False)
+>>> model.score(X_test,Y_test)
+0.8516
+>>> model.predict(X_test)[0:25]
+array(['CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'WITHDRAWN', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED'], dtype=object)
+>>> Y_test[0:25]
+array(['WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED',
+       'CERTIFIED', 'CERTIFIED-WITHDRAWN', 'CERTIFIED-WITHDRAWN',
+       'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
+       'CERTIFIED-WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED'],
+      dtype=object)
+>>> model.score(X_test,Y_test)
+0.8516
 
 

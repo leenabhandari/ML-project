@@ -350,3 +350,37 @@ array(['WITHDRAWN', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED', 'CERTIFIED',
 >>> plt.show()
 
 
+Python 2.7.14 (v2.7.14:84471935ed, Sep 16 2017, 20:19:30) [MSC v.1500 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from pandas import read_csv
+>>> import numpy as np
+>>> from sklearn.neighbors import KNeighborsClassifier
+>>> from sklearn import linear_model
+>>> from sklearn.model_selection import train_test_split
+>>> from sklearn import tree
+>>> from sklearn.feature_extraction.text import CountVectorizer
+>>> from sklearn.ensemble import RandomForestClassifier
+>>> from sklearn.svm import SVC
+>>> from sklearn.preprocessing import Imputer
+>>> from sklearn.feature_extraction import FeatureHasher
+>>> from sklearn.feature_extraction.text import HashingVectorizer
+>>> from sklearn.model_selection import KFold
+>>> from sklearn.model_selection import cross_val_score
+>>> from sklearn.model_selection import cross_val_predict
+>>> from sklearn import metrics
+>>> import matplotlib.pyplot as plt
+>>> import string
+>>> data=read_csv('h1b_kaggle.csv')
+>>> ds=data.values
+>>> X_data1=ds[:,6]
+>>> imp=Imputer()
+>>> Y_data=ds[:,1]
+>>> X_trans=imp.fit_transform(X_data1.reshape(-1,1))
+>>> lat=ds[:,10]
+>>> X_lat=imp.fit_transform(lat.reshape(-1,1))
+>>> X_data4=np.c_[X_trans,X_lat]
+>>> model=RandomForestClassifier(n_jobs=-1,random_state=50,n_estimators=1)
+>>> kfold = KFold(n_splits=10, random_state=7)
+>>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8214669447499349

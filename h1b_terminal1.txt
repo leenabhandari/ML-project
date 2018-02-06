@@ -384,3 +384,16 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
 >>> metrics.accuracy_score(Y_data, predicted)
 0.8214669447499349
+
+>>> results = cross_val_score(model, X_trans, Y_data, cv=kfold,scoring='accuracy')
+>>> results.mean()
+0.8342132466493298
+>>> results = cross_val_score(model, X_trans, Y_data, cv=kfold,scoring='f1_weighted')
+>>> results.mean()
+0.8061526144981764
+>>> results = cross_val_score(model, X_trans, Y_data, cv=kfold,scoring='precision_weighted')
+>>> results.mean()
+0.7833350577546871
+>>> results = cross_val_score(model, X_trans, Y_data, cv=kfold,scoring='recall_weighted')
+>>> results.mean()
+0.8366930866173234

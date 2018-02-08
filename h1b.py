@@ -13,7 +13,10 @@ from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_val_predict
+from sklearn.naive_bayes import MultinomialNB
 from sklearn import metrics
+from sklearn.linear_model import SGDClassifier
+from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 import string
 
@@ -101,6 +104,7 @@ for i in range(soc.size):
   soc[i]=string.replace(soc[i],'INFORMATON','INFORMATION')
   soc[i]=string.replace(soc[i],'MANGERS','MANAGER')
   soc[i]=string.replace(soc[i],'MANAGERE','MANAGER')
+  soc[i]=string.replace(soc[i],'SPECIALISTS','SPECIALIST')
 
 
 sfit=np.unique(soc)
@@ -147,6 +151,11 @@ X_trans=imp.fit_transform(X_new)
 ##########
 kfold = KFold(n_splits=10, random_state=7)
 results = cross_val_score(model, X, Y_data, cv=kfold)
-predicted=cross_val_predict(model,X_trans,Y_data,cv=kfold)
+predicted=cross_val_predict(model,X_data4,Y_data,cv=kfold)
 metrics.accuracy_score(Y_data, predicted)
+model=MultinomialNB()
 results.mean()
+########
+index_miss=data.lat.isnull()
+data2=data[index_miss!= True]
+

@@ -397,3 +397,22 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> results = cross_val_score(model, X_trans, Y_data, cv=kfold,scoring='recall_weighted')
 >>> results.mean()
 0.8366930866173234
+
+>>> data=read_csv('h1b_sample3.csv')
+>>> ds=data.values
+>>> Y_data=ds[:,1]
+>>> ws=ds[:,8]
+>>> ws=ws.astype(str)
+>>> c=np.char.split(ws,',')
+>>> d=[i[1] for i in c]
+>>> workstate=set(d)
+>>> vec = CountVectorizer()
+>>> vec.fit_transform(workstate)
+<53x58 sparse matrix of type '<type 'numpy.int64'>'
+        with 66 stored elements in Compressed Sparse Row format>
+>>> X_ws=vec.transform(d).toarray()
+>>> from sklearn.naive_bayes import MultinomialNB
+>>> model=MultinomialNB()
+>>> predicted=cross_val_predict(model,X_ws,Y_data,cv=kfold)
+>>> metrics.accuracy_score(Y_data, predicted)
+0.8290921213468163

@@ -28,7 +28,7 @@ import string
 data=read_csv('h1b_kaggle1.csv')
 index_miss=data.lat.isnull()
 data2=data[index_miss!= True]
-
+data2.to_csv("h1b_data.csv")
 ds=data2.values
 Y_data=ds[:,1]
 
@@ -47,6 +47,10 @@ vec.fit_transform(workstate)
 X_ws=vec.transform(d).toarray()
 X_data3=np.c_[X_data1,X_ws]
 
+lon=ds[:,9]
+X_data4=np.c_[X_data1, lon]
+
+
 kfold = KFold(n_splits=10, random_state=7)
 models=[KNeighborsClassifier(),SGDClassifier(),LogisticRegression(),AdaBoostClassifier(),DecisionTreeClassifier(),RandomForestClassifier(), MultinomialNB()]
 
@@ -56,7 +60,7 @@ models=[KNeighborsClassifier(),SGDClassifier(),LogisticRegression(),AdaBoostClas
 #	print metrics.accuracy_score(Y_data, predicted)
 #	print ""
 
-X_train, X_test, Y_train, Y_test = train_test_split(X_data2, Y_data, test_size=0.10,random_state=7)
+X_train, X_test, Y_train, Y_test = train_test_split(X_data4, Y_data, test_size=0.10,random_state=7)
 
 for model in models:
 	filename=str(model)[0:15]+ ".sav"
@@ -66,3 +70,5 @@ for model in models:
 	result = loaded_model.score(X_test, Y_test)
 	print model
 	print(result)
+
+	

@@ -1,4 +1,4 @@
-from pandas import read_csv
+2from pandas import read_csv
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import linear_model
@@ -60,7 +60,7 @@ models=[KNeighborsClassifier(),SGDClassifier(),LogisticRegression(),AdaBoostClas
 #	print metrics.accuracy_score(Y_data, predicted)
 #	print ""
 
-X_train, X_test, Y_train, Y_test = train_test_split(X_data4, Y_data, test_size=0.10,random_state=7)
+X_train, X_test, Y_train, Y_test = train_test_split(X_data2, Y_data, test_size=0.10,random_state=7)
 
 for model in models:
 	filename=str(model)[0:15]+ ".sav"

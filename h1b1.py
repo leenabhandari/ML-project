@@ -1,4 +1,4 @@
-2from pandas import read_csv
+from pandas import read_csv
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import linear_model

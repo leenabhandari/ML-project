@@ -159,3 +159,4 @@ results.mean()
 index_miss=data.lat.isnull()
 data2=data[index_miss!= True]
 
+data.reindex(np.random.permutation(data.index))

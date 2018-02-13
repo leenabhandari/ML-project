@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
 #from pickle import dump
 #from pickle import load
-#from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 import string
 
 
@@ -66,7 +66,7 @@ data_lon=np.array([]) #lon
 data_lat=np.array([]) #lat
 data_full=np.array([]) #FULL_TIME
 data_ws=np.array([]) #WORKSITE
-#data_soc=np.array([])
+data_soc=np.array([])
 
 
 #append rows ( 10000 of each category)
@@ -81,7 +81,7 @@ for i in range(Y_data.size):
   data_lat=np.append(data_lat,ds[i,10])
   data_full=np.append(data_full,full_time[i])
   data_ws=np.append(data_ws,ds[i,8])
-  #data_soc=np.append(data_soc,ds[i,3])
+  data_soc=np.append(data_soc,ds[i,3])
   count_cert=count_cert+1
 
 count_with=0
@@ -95,7 +95,7 @@ for i in range(Y_data.size):
   data_lat=np.append(data_lat,ds[i,10])
   data_full=np.append(data_full,full_time[i])
   data_ws=np.append(data_ws,ds[i,8])
-  #data_soc=np.append(data_soc,ds[i,3])
+  data_soc=np.append(data_soc,ds[i,3])
   count_with=count_with+1		
 
 
@@ -110,7 +110,7 @@ for i in range(Y_data.size):
   data_lat=np.append(data_lat,ds[i,10])
   data_full=np.append(data_full,full_time[i])
   data_ws=np.append(data_ws,ds[i,8])
-  #data_soc=np.append(data_soc,ds[i,3])
+  data_soc=np.append(data_soc,ds[i,3])
   count_certwith=count_certwith+1
 
   
@@ -125,7 +125,7 @@ for i in range(Y_data.size):
   data_lat=np.append(data_lat,ds[i,10])
   data_full=np.append(data_full,full_time[i])
   data_ws=np.append(data_ws,ds[i,8])
-  #data_soc=np.append(data_soc,ds[i,3])
+  data_soc=np.append(data_soc,ds[i,3])
   count_den=count_den+1
   
 

@@ -119,3 +119,6 @@ data2=np.c_[data2, data_full]
 data2=np.c_[data2, X_ws]
 np.random.shuffle(data2)
 
+df=data2
+df = pd.DataFrame({'CASE_STATUS':df[:,0],'PREVAILING_WAGE':df[:,1],'lon':df[:,2],'lat':df[:,3],'FULL_TIME':df[:,4]})
+df.to_csv('data1.csv')

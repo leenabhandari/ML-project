@@ -63,6 +63,10 @@ array([['CERTIFIED-WITHDRAWN', '42952.0', '-121.7405167', '38.5449065',
         '0', '0', '0', '0', '0', '0', '0', '0']],
 ```
 
+
+data2=read_csv('data2.csv')
+data2=np.array(data2)
+
 #separate out X&Y
 Y_new=data2[:,0]
 X_new=data2[:,1:63]  

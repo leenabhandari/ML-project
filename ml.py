@@ -89,6 +89,7 @@ print grid.best_estimator_.n_neighbors #4
 #plt.plot(np.corrcoef(X_new.astype(float)[0:25,:]))
 
 #plot correlation score
+names=['wage','lon','lat','full','states']
 datafi=pd.read_csv("data2.csv",names=names)
 correlations=datafi.corr()
 plt.plot(correlations)

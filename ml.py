@@ -28,6 +28,8 @@ from sklearn.model_selection import GridSearchCV
 import matplotlib.pyplot as plt
 from matplotlib import pyplot
 from dataprep import data2
+#from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
 
 
 
@@ -39,9 +41,16 @@ data2=np.array(data2)
 #separate out X&Y
 Y_new=data2[:,1]
 X_new=data2[:,2:7]  
+
+#dimension reduction
+pca=PCA(n_components=2)
+pca.fit(X_new)
+X2=pca.transform(X_new)
 #kfold = KFold(n_splits=10, random_state=7)  
 X_train, X_test, Y_train, Y_test = train_test_split(X_new, Y_new, test_size=0.10,random_state=7)
 # X_wage=ds[:,6] #prevailing wage
+
+
 
 model=RandomForestClassifier()
 prams={'max_depth':[None,1,2,3,4],'n_estimators':[10,20,30,50,1,100]}
@@ -94,3 +103,4 @@ ax.set_yticks(ticks)
 ax.set_xticklabels(names)
 ax.set_yticklabels(names)
 pyplot.show()
+

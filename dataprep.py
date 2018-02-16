@@ -1,16 +1,34 @@
+import pandas as pd
 from pandas import read_csv
 import numpy as np
 
-from sklearn.feature_extraction.text import CountVectorizer
-
+#from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import HashingVectorizer
 import string
 
-data1=read_csv('newdata.csv')
+
+data=read_csv('h1b_kaggle.csv')
+
+#remove data with missiing values
+index_miss=data.lat.isnull()
+data=data[index_miss!= True]
+index_miss=data.lon.isnull()
+data=data[index_miss!= True]
+index_miss=data.PREVAILING_WAGE.isnull()
+data=data[index_miss!= True]
+index_miss=data.WORKSITE.isnull()
+data=data[index_miss!= True]
+index_miss=data.SOC_NAME.isnull()
+data=data[index_miss!= True]
+data=data.drop(data.columns[[0]], axis=1)
+
+data1=data
+#data1=read_csv('newdata.csv')
 data1=data1.reindex(np.random.permutation(data1.index)) #shuffle all data
 ds=data1.values
-Y_data=ds[:,2] #CASE_STATUS
+Y_data=ds[:,0] #CASE_STATUS
 
-full_time=ds[:,6]
+full_time=ds[:,4]
 #convert full_time value to 0 & 1
 for i in range(full_time.size):
  if full_time[i]=='Y':
@@ -36,12 +54,12 @@ for i in range(Y_data.size):
   break
  elif (Y_data[i]=='CERTIFIED'):
   data_y=np.append(data_y,Y_data[i])
-  data_wage=np.append(data_wage,ds[i,7])
-  data_lon=np.append(data_lon,ds[i,10])
-  data_lat=np.append(data_lat,ds[i,11])
+  data_wage=np.append(data_wage,ds[i,5])
+  data_lon=np.append(data_lon,ds[i,8])
+  data_lat=np.append(data_lat,ds[i,9])
   data_full=np.append(data_full,full_time[i])
-  data_ws=np.append(data_ws,ds[i,9])
-  data_soc=np.append(data_soc,ds[i,4])
+  data_ws=np.append(data_ws,ds[i,7])
+  data_soc=np.append(data_soc,ds[i,2])
   count_cert=count_cert+1
 
 count_with=0
@@ -50,12 +68,12 @@ for i in range(Y_data.size):
   break
  elif (Y_data[i]=='WITHDRAWN'):
   data_y=np.append(data_y,Y_data[i])
-  data_wage=np.append(data_wage,ds[i,7])
-  data_lon=np.append(data_lon,ds[i,10])
-  data_lat=np.append(data_lat,ds[i,11])
+  data_wage=np.append(data_wage,ds[i,5])
+  data_lon=np.append(data_lon,ds[i,8])
+  data_lat=np.append(data_lat,ds[i,9])
   data_full=np.append(data_full,full_time[i])
-  data_ws=np.append(data_ws,ds[i,9])
-  data_soc=np.append(data_soc,ds[i,4])
+  data_ws=np.append(data_ws,ds[i,7])
+  data_soc=np.append(data_soc,ds[i,2])
   count_with=count_with+1		
 
 
@@ -65,12 +83,12 @@ for i in range(Y_data.size):
   break
  elif (Y_data[i]=='CERTIFIED-WITHDRAWN'):
   data_y=np.append(data_y,Y_data[i])
-  data_wage=np.append(data_wage,ds[i,7])
-  data_lon=np.append(data_lon,ds[i,10])
-  data_lat=np.append(data_lat,ds[i,11])
+  data_wage=np.append(data_wage,ds[i,5])
+  data_lon=np.append(data_lon,ds[i,8])
+  data_lat=np.append(data_lat,ds[i,9])
   data_full=np.append(data_full,full_time[i])
-  data_ws=np.append(data_ws,ds[i,9])
-  data_soc=np.append(data_soc,ds[i,4])
+  data_ws=np.append(data_ws,ds[i,7])
+  data_soc=np.append(data_soc,ds[i,2])
   count_certwith=count_certwith+1
 
   
@@ -80,12 +98,12 @@ for i in range(Y_data.size):
   break
  elif (Y_data[i]=='DENIED'):
   data_y=np.append(data_y,Y_data[i])
-  data_wage=np.append(data_wage,ds[i,7])
-  data_lon=np.append(data_lon,ds[i,10])
-  data_lat=np.append(data_lat,ds[i,11])
+  data_wage=np.append(data_wage,ds[i,5])
+  data_lon=np.append(data_lon,ds[i,8])
+  data_lat=np.append(data_lat,ds[i,9])
   data_full=np.append(data_full,full_time[i])
-  data_ws=np.append(data_ws,ds[i,9])
-  data_soc=np.append(data_soc,ds[i,4])
+  data_ws=np.append(data_ws,ds[i,7])
+  data_soc=np.append(data_soc,ds[i,2])
   count_den=count_den+1
   
 
@@ -93,11 +111,13 @@ ws=data_ws.astype(str) #convert data_ws to string and store in ws
 #worksites=np.unique(data_ws) #pull out unique worksites
 ws_split=np.char.split(ws,',') #split into city and state
 data_states=[i[1] for i in ws_split] #store states
-workstate=set(data_states) #consider unique states
-vec = CountVectorizer()
-vec.fit_transform(workstate) #fit unique states
-X_ws=vec.transform(data_states).toarray() #transform states and convert to array
+#workstate=set(data_states) #consider unique states
+#vec = CountVectorizer()
+#vec.fit_transform(workstate) #fit unique states
+#X_ws=vec.transform(data_states).toarray() #transform states and convert to array
 
+hv=HashingVectorizer(n_features=1)
+X_ws=hv.transform(data_states).toarray()
   
 for i in range(data_soc.size):
   data_soc[i]=string.replace(data_soc[i],'MANAGERS','MANAGER')

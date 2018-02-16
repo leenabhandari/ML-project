@@ -30,6 +30,7 @@ from matplotlib import pyplot
 from dataprep import data2
 #from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
+import pandas as pd
 
 
 

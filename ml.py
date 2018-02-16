@@ -25,6 +25,7 @@ from sklearn.tree import DecisionTreeClassifier
 #from pickle import load
 from sklearn.model_selection import GridSearchCV
 #import string
+import matplotlib.pyplot as plt
 from dataprep import data2
 
 
@@ -36,7 +37,7 @@ data2=np.array(data2)
 
 #separate out X&Y
 Y_new=data2[:,1]
-X_new=data2[:,2:64]  
+X_new=data2[:,2:7]  
 #kfold = KFold(n_splits=10, random_state=7)  
 X_train, X_test, Y_train, Y_test = train_test_split(X_new, Y_new, test_size=0.10,random_state=7)
 # X_wage=ds[:,6] #prevailing wage
@@ -73,3 +74,5 @@ grid.fit(X_new,Y_new)
 print model
 print grid.best_score_ #0.3191930806919308
 print grid.best_estimator_.n_neighbors #4
+
+plt.plot(np.corrcoef(X_new.astype(float)[0:25,:]))

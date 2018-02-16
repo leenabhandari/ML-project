@@ -26,6 +26,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
 #import string
 import matplotlib.pyplot as plt
+from matplotlib import pyplot
 from dataprep import data2
 
 
@@ -76,6 +77,20 @@ print grid.best_score_ #0.3191930806919308
 print grid.best_estimator_.n_neighbors #4
 
 #plt.plot(np.corrcoef(X_new.astype(float)[0:25,:]))
+
+#plot correlation score
 datafi=pd.read_csv("data2.csv",names=names)
 correlations=datafi.corr()
 plt.plot(correlations)
+
+#plot correlations
+fig = pyplot.figure()
+ax = fig.add_subplot(111)
+cax = ax.matshow(correlations, vmin=-1, vmax=1)
+fig.colorbar(cax)
+ticks = numpy.arange(0,9,1)
+ax.set_xticks(ticks)
+ax.set_yticks(ticks)
+ax.set_xticklabels(names)
+ax.set_yticklabels(names)
+pyplot.show()

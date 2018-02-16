@@ -75,4 +75,7 @@ print model
 print grid.best_score_ #0.3191930806919308
 print grid.best_estimator_.n_neighbors #4
 
-plt.plot(np.corrcoef(X_new.astype(float)[0:25,:]))
+#plt.plot(np.corrcoef(X_new.astype(float)[0:25,:]))
+datafi=pd.read_csv("data2.csv",names=names)
+correlations=datafi.corr()
+plt.plot(correlations)

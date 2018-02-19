@@ -54,38 +54,79 @@ X_train, X_test, Y_train, Y_test = train_test_split(X_new, Y_new, test_size=0.10
 
 
 model=RandomForestClassifier()
-prams={'max_depth':[None,1,2,3,4],'n_estimators':[10,20,30,50,1,100]}
-grid=GridSearchCV(model,prams)
+#prams={'max_depth':[None,1,2,3,4],'n_estimators':[10,20,30,50,1,100]}
+params={'n_estimators':[10,50,100],'criterion':['gini','entropy'],'max_features':['auto','sqrt','log2'],'max_depth':[1,2,3,5],'min_samples_leaf':[1,2,3]}
+grid=GridSearchCV(model,params)
 grid.fit(X_new,Y_new)
 print model
-print grid.best_score_ #0.33001699830017
-print grid.best_estimator_.n_estimators #100
+#print grid.best_score_ #0.33001699830017
+#print grid.best_estimator_.n_estimators #100
+print grid.best_score_
+#0.315718428157
+print grid.best_estimator_.n_estimators
+#10
+print grid.best_estimator_.max_features
+#'sqrt'
+print grid.best_estimator_.criterion
+#'gini'
+print grid.best_estimator_.max_depth
+#5
+print grid.best_estimator_.min_samples_leaf
+#1
+
 
 model=DecisionTreeClassifier()
-prams={'min_samples_leaf':(1,2,3,5),'max_depth':[None,1,2,3]}
-grid=GridSearchCV(model,prams)
+#prams={'min_samples_leaf':(1,2,3,5),'max_depth':[None,1,2,3]}
+params={'criterion':['gini','entropy'],'max_depth':[None,1,2],'max_features':['auto','log2','sqrt',None]}
+grid=GridSearchCV(model,params)
 grid.fit(X_new,Y_new)
 print model
-print grid.best_score_ #0.3263173682631737
-print grid.best_estimator_.min_samples_leaf #1
+#print grid.best_score_ #0.3263173682631737
+#print grid.best_estimator_.min_samples_leaf #1
+print grid.best_score_
+#0.32796720327967205
+print grid.best_estimator_.criterion
+#'entropy'
+print grid.best_estimator_.max_depth
+print grid.best_estimator_.max_features
+#'auto'
 
 model=AdaBoostClassifier()
-prams={'n_estimators':[50,10,100],'learning_rate':[1,2]}
-grid=GridSearchCV(model,prams)
+#prams={'n_estimators':[50,10,100],'learning_rate':[1,2]}
+params={'n_estimators':[50,100,150],'learning_rate':[1,2,3],'random_state':[1,2,3]}
+grid=GridSearchCV(model,params)
 grid.fit(X_new,Y_new)
 print model
-print grid.best_score_  #0.31916808319168083
-print grid.best_estimator_.learning_rate #1
-print grid.best_estimator_.n_estimators #100
+#print grid.best_score_  #0.31916808319168083
+#print grid.best_estimator_.learning_rate #1
+#print grid.best_estimator_.n_estimators #100
+print grid.best_score_
+#0.3162183781621838
+print grid.best_estimator_.learning_rate
+#1
+print grid.best_estimator_.n_estimators
+#100
+print grid.best_estimator_.random_state
+#1
+
 
 model=KNeighborsClassifier()
 prams={'n_neighbors':[4,5,8]}
-grid=GridSearchCV(model,prams)
+grid=GridSearchCV(model,params)
 grid.fit(X_new,Y_new)
 print model
-print grid.best_score_ #0.3191930806919308
-print grid.best_estimator_.n_neighbors #4
-
+#print grid.best_score_ #0.3191930806919308
+#print grid.best_estimator_.n_neighbors #4
+print grid.best_score_
+#0.31456854314568544
+print grid.best_estimator_.n_neighbors
+#8
+print grid.best_estimator_.n_jobs
+#1
+print grid.best_estimator_.p
+#1
+print grid.best_estimator_.leaf_size
+#20
 #plt.plot(np.corrcoef(X_new.astype(float)[0:25,:]))
 
 #plot correlation score
